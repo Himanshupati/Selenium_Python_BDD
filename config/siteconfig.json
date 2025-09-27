@@ -1,0 +1,26 @@
+{
+  "test": [
+    {
+      "site": "google",
+      "url": "https://www.google.com/",
+      "searchers": "google",
+      "socialnum": 4
+    }
+  ],
+  "prod": [
+    {
+      "site": "sauce",
+      "url": "https://www.saucedemo.com/",
+      "searchers": "sauce",
+      "socialnum": 0
+    }
+  ],
+  "qa": [
+    {
+     "site": "google",
+      "url": "https://www.google.com/",
+      "searchers": "google",
+      "socialnum": 4
+    }
+  ]
+}
