@@ -1,0 +1,5 @@
+{
+  "browser": "chrome",
+  "wait_time": 30,
+  "save_logs": "false"
+}

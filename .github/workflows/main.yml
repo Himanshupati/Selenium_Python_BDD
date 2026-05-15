@@ -1,0 +1,48 @@
+name: Run Python BDD Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  run-bdd-tests:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install behave pyyaml
+
+      - name: Run Automation BDD Tests
+        run: |
+          pytest -n=5 -m "valid_login" -v -q -s --capture sys -rF \
+            --html=.\Reports\sauce.html \
+            --self-contained-html \
+            --site=sauce \
+            --env=prod \
+            --disable-warnings
+
+      # - name: Save reports
+      #   run: mv ./reports/sauce.html ./reports/TestReports_$(date +%y%m%d%H%M%S).html
+
+      - name: Upload Test Reports as Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: behave-reports
+          path: .\Reports\sauce.html
